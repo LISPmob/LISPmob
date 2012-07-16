@@ -60,6 +60,16 @@
 #include "patricia/patricia.h"
 
 /*
+ * Determine endian encoding
+ */
+
+#if _BYTE_ORDER == __LITTLE_ENDIAN
+#define LITTLE_ENDIANS 1234
+#else
+#define BIG_ENDIANS  4321
+#endif
+
+/*
  *  Protocols constants related with timeouts
  *
  */
@@ -310,7 +320,7 @@ typedef struct lispd_pkt_mapping_record_t_ {
     uint32_t ttl;
     uint8_t locator_count;
     uint8_t eid_prefix_length;
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t reserved1:4;
     uint8_t authoritative:1;
     uint8_t action:3;
@@ -320,7 +330,7 @@ typedef struct lispd_pkt_mapping_record_t_ {
     uint8_t reserved1:4;
 #endif
     uint8_t reserved2;
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t version_hi:4;
     uint8_t reserved3:4;
 #else
@@ -343,7 +353,7 @@ typedef struct lispd_pkt_mapping_record_locator_t_ {
     uint8_t mpriority;
     uint8_t mweight;
     uint8_t unused1;
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t reachable:1;
     uint8_t probed:1;
     uint8_t local:1;
@@ -412,7 +422,7 @@ typedef struct lispd_pkt_mapping_record_locator_t_ {
  */
 
 typedef struct lispd_pkt_map_register_t_ {
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t  reserved1:3;
     uint8_t  proxy_reply:1;
     uint8_t  lisp_type:4;
@@ -422,7 +432,7 @@ typedef struct lispd_pkt_map_register_t_ {
     uint8_t  reserved1:3;
 #endif
     uint8_t reserved2;
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t map_notify:1;
     uint8_t reserved3:7;
 #else
@@ -470,7 +480,7 @@ typedef struct lispd_pkt_map_register_t_ {
  */
 
 typedef struct lispd_pkt_map_notify_t_ {
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t  reserved1:4;
     uint8_t  lisp_type:4;
 #else
@@ -554,7 +564,7 @@ typedef struct {                        /* chain per eid-prefix/len/afi */
  *    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  */
 typedef struct lispd_pkt_encapsulated_control_t_ {
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t reserved1:4;
     uint8_t type:4;
 #else
@@ -608,7 +618,7 @@ typedef struct lispd_pkt_encapsulated_control_t_ {
  * request records follow.
  */
 typedef struct lispd_pkt_map_request_t_ {
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t solicit_map_request:1;
     uint8_t rloc_probe:1;
     uint8_t map_data_present:1;
@@ -621,7 +631,7 @@ typedef struct lispd_pkt_map_request_t_ {
     uint8_t rloc_probe:1;
     uint8_t solicit_map_request:1;
 #endif
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t reserved1:6;
     uint8_t smr_invoked:1;
     uint8_t pitr:1;
@@ -630,7 +640,7 @@ typedef struct lispd_pkt_map_request_t_ {
     uint8_t smr_invoked:1;
     uint8_t reserved1:6;
 #endif
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t additional_itr_rloc_count:5;
     uint8_t reserved2:3;
 #else
@@ -707,7 +717,7 @@ typedef struct lispd_pkt_map_request_eid_prefix_record_t_ {
  * Fixed size portion of the map reply.
  */
 typedef struct lispd_pkt_map_reply_t_ {
-#ifdef LITTLE_ENDIAN
+#ifdef LITTLE_ENDIANS
     uint8_t reserved1:2;
     uint8_t echo_nonce:1;
     uint8_t rloc_probe:1;
