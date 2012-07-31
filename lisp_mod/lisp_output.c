@@ -285,7 +285,6 @@ void lisp_encap4(struct sk_buff *skb, int locator_addr,
   skb->transport_header = skb->network_header;
   udh = (struct udphdr *)(skb_push(skb, sizeof(struct udphdr)));
   skb_reset_transport_header(skb);
-
   /*
    * Hash of inner header source/dest addr. This needs thought.
    */
@@ -683,7 +682,6 @@ unsigned int lisp_output6(unsigned int hooknum,
       tcph->check=0;
       tcph->check = csum_ipv6_magic(&(iph->saddr), &(iph->daddr), packet_buf->len, IPPROTO_TCP, csum_partial((char *)tcph, packet_buf->len, 0));
       skb_push(packet_buf, sizeof(struct ipv6hdr));
-      skb_reset_transport_header(packet_buf);
   }
   
   /* 
@@ -827,7 +825,6 @@ unsigned int lisp_output4(unsigned int hooknum,
                  ntohs(udh->dest), ntohs(udh->source));
 #endif
           skb_push(packet_buf, sizeof(struct iphdr));
-          skb_reset_transport_header(packet_buf);
           return NF_ACCEPT;
       } else {
 #ifdef DEBUG_PACKETS
@@ -837,7 +834,6 @@ unsigned int lisp_output4(unsigned int hooknum,
       }
        // Undo the pull
       skb_push(packet_buf, sizeof(struct iphdr));
-      skb_reset_transport_header(packet_buf);
     }
 
   /*
@@ -896,7 +892,6 @@ unsigned int lisp_output4(unsigned int hooknum,
        tcph->check=0;
        tcph->check = tcp_v4_check(packet_buf->len, iph->saddr, iph->daddr, csum_partial((char *)tcph, packet_buf->len, 0));
        skb_push(packet_buf, sizeof(struct iphdr));
-       skb_reset_transport_header(packet_buf);
   }
   
   /* 

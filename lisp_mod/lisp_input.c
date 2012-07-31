@@ -184,6 +184,7 @@ unsigned int lisp_input(unsigned int hooknum, struct sk_buff *packet_buf,
    */
   if (iph->protocol == IPPROTO_UDP) {
 
+
     // Move past the ip header
     skb_pull(packet_buf, sizeof(struct iphdr));
     skb_reset_transport_header(packet_buf);
@@ -275,7 +276,6 @@ unsigned int lisp_input(unsigned int hooknum, struct sk_buff *packet_buf,
 
     // Undo the pull, the next layer expects a pristine skb
     skb_push(packet_buf, sizeof(struct iphdr));
-    skb_reset_transport_header(packet_buf);
   }
 
 #ifdef DEBUG_PACKETS
