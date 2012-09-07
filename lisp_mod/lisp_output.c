@@ -324,7 +324,6 @@ void lisp_encap4(struct sk_buff *skb, int locator_addr,
    */ 
   udh = (struct udphdr *)(skb_push(skb, sizeof(struct udphdr)));
   skb_reset_transport_header(skb);
-
   /*
    * Hash of inner header source/dest addr. This needs thought.
    */
